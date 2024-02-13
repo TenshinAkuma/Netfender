@@ -38,6 +38,8 @@ func _unhandled_input(event):
 ## It takes a string argument representing the type of tower (Gun or Missile) to be built.
 func initiate_build_mode(tower_type):
 	
+	if build_mode:
+		cancel_build_mode()
 	## Construct the full tower type name by appending "T1" to the provided `tower_type`.
 	build_type = tower_type + "T1"
 	
@@ -65,7 +67,7 @@ func update_tower_preview():
 func cancel_build_mode():
 	build_mode = false
 	build_valid = false
-	get_node("UI/TowerPreview").queue_free()
+	get_node("UI/TowerPreview").free()
 	
 func verify_and_build():
 	if build_valid:
