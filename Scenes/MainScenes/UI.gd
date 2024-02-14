@@ -28,3 +28,12 @@ func update_tower_preview(new_position, color):
 	if get_node("TowerPreview/DragTower").modulate != Color(color):
 		get_node("TowerPreview/DragTower").modulate = Color(color)
 		get_node("TowerPreview/Sprite").modulate = Color(color)
+
+##
+## Game control function
+##
+func _on_PausePlay_pressed():
+	if get_tree().is_paused():
+		get_tree().paused = false
+	else:
+		get_tree().paused = true
