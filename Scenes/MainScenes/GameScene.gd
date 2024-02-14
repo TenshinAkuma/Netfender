@@ -2,6 +2,9 @@ extends Node2D
 
 var map_node
 
+var current_wave = 0
+var enemies_in_wave = 0
+
 var build_mode = false
 var build_valid = false
 var build_tile
@@ -22,6 +25,7 @@ func _ready():
 		## This means that whenever a button in this group is pressed, the `initiate_build_mode` function will be called.
 		## Additionally, pass the button's name as an argument to the function, for identification purposes.
 		button.connect("pressed", self, "initiate_build_mode", [button.get_name()])
+	start_next_wave()
 	
 func _process(delta):
 	if build_mode:
@@ -33,7 +37,31 @@ func _unhandled_input(event):
 	if event.is_action_released("ui_accept") and build_mode == true:
 		verify_and_build()
 		cancel_build_mode()
+		
+##
+## ENEMY WAVE FUNCTIONS
+##
+func start_next_wave():
+	var wave_data = retrieve_wave_data()
+	yield(get_tree().create_timer(0.2),"timeout") ## interval between waves so enemies does not instant spawn
+	spawn_enemies(wave_data)
 	
+	
+func retrieve_wave_data():
+	var wave_data = [["BlueTank", 0.7], ["BlueTank", 0.1]]
+	current_wave += 1
+	enemies_in_wave = wave_data.size()
+	return wave_data
+		
+func spawn_enemies(wave_data):
+	for enemy in wave_data:
+		var new_enemy = load("res://Scenes/Enemies/" + enemy[0] + ".tscn").instance()
+		map_node.get_node("Path").add_child(new_enemy, true)
+		yield(get_tree().create_timer(enemy[1]),"timeout")
+##
+## TOWER BUIDLING FUNCTIONS
+##
+
 ## This function is called when a build button is pressed, triggering build mode.
 ## It takes a string argument representing the type of tower (Gun or Missile) to be built.
 func initiate_build_mode(tower_type):
