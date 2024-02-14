@@ -87,8 +87,8 @@ rect_min_size = Vector2( 70, 70 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
 toggle_mode = true
-texture_normal = ExtResource( 9 )
-texture_pressed = ExtResource( 7 )
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 9 )
 expand = true
 
 [node name="SpeedUp" type="TextureButton" parent="UI/HUD/GameControls"]
@@ -103,3 +103,4 @@ texture_normal = ExtResource( 8 )
 expand = true
 
 [connection signal="pressed" from="UI/HUD/GameControls/PausePlay" to="UI" method="_on_PausePlay_pressed"]
+[connection signal="pressed" from="UI/HUD/GameControls/SpeedUp" to="UI" method="_on_SpeedUp_pressed"]

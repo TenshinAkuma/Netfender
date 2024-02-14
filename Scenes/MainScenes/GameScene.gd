@@ -25,7 +25,6 @@ func _ready():
 		## This means that whenever a button in this group is pressed, the `initiate_build_mode` function will be called.
 		## Additionally, pass the button's name as an argument to the function, for identification purposes.
 		button.connect("pressed", self, "initiate_build_mode", [button.get_name()])
-	start_next_wave()
 	
 func _process(delta):
 	if build_mode:
